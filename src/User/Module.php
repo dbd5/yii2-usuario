@@ -238,6 +238,16 @@ class Module extends BaseModule
     ];
 
     /**
+     * @var string path for mail view files
+     */
+    public $mailViewPath = '@common/mail';
+
+    /**
+     * @var string theme to be used by mail
+     */
+    public $mailTheme = '';
+
+    /**
      * @var array layouts for module controllers
      *  .. key => value pairs where the keys are the controller ids and values are the layout files
      */
