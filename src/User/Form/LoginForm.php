@@ -148,7 +148,24 @@ class LoginForm extends Model
         if ($this->validate()) {
             $duration = $this->rememberMe ? $this->module->rememberLoginLifespan : 0;
 
-            return Yii::$app->getUser()->login($this->user, $duration);
+            if (Yii::$app->getUser()->login($this->user, $duration)) {
+
+                /** @var Module $module */
+                if (in_array(Yii::$app->id, $this->module->secureAppList)) {
+                    if ( !empty($this->module->secureUserPermission) && !Yii::$app->user->can($this->module->secureUserPermission) ) {
+                        Yii::$app->user->logout();
+                        return Yii::$app->controller->goHome();
+                    }
+                } else {
+                    if ( !empty($this->module->regularUserPermission) && !Yii::$app->user->can($this->module->secureUserPermission) ) {
+                        Yii::$app->user->logout();
+                        return Yii::$app->controller->goHome();
+                    }
+                }
+
+                return true;
+            }
+
         }
 
         return false;

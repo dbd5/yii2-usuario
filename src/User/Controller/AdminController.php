@@ -70,6 +70,10 @@ class AdminController extends Controller
             Url::remember('', 'actions-redirect');
         }
 
+        if (array_key_exists($this->id, $this->module->layouts)) {
+            $this->layout = $this->module->layouts[$this->id];
+        }
+
         return parent::beforeAction($action);
     }
 
@@ -330,7 +334,7 @@ class AdminController extends Controller
 
         return $this->redirect(['index']);
     }
-    
+
     /**
      * Forces the user to change password at next login
      * @param integer $id

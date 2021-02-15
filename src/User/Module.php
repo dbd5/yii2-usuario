@@ -16,6 +16,7 @@ use Da\User\Filter\AccessRuleFilter;
 use Yii;
 use yii\base\Module as BaseModule;
 use yii\helpers\Html;
+use Da\User\Model\Token;
 
 /**
  * This is the main module class of the yii2-usuario extension.
@@ -210,6 +211,39 @@ class Module extends BaseModule
      * @var boolean whether to disable IP logging into user table
      */
     public $disableIpLogging = false;
+
+    /**
+     * @var string[] list of applications treated as admin endpoint for login purposes
+     */
+    public $secureAppList = ['app-backend'];
+
+    /**
+     * @var string permission user must have to login to admin endpoints
+     */
+    public $secureUserPermission = 'login-to-backend';
+
+    /**
+     * @var string permission user must have to used privileged resources
+     */
+    public $regularUserPermission = 'subscriber';
+
+    /**
+     * @var string[] routes for Token getUrl function
+     */
+    public $tokenRoutes = [
+        Token::TYPE_CONFIRMATION => '/user/confirm',
+        Token::TYPE_RECOVERY => '/user/recover',
+        Token::TYPE_CONFIRM_NEW_EMAIL => '/user/settings/confirm',
+        Token::TYPE_CONFIRM_OLD_EMAIL => '/user/settings/confirm',
+    ];
+
+    /**
+     * @var array layouts for module controllers
+     *  .. key => value pairs where the keys are the controller ids and values are the layout files
+     */
+    public $layouts = [
+        // 'profile' => '@frontend/views/layouts/secure',
+    ];
 
     /**
      * @return string with the hit to be used with the give consent checkbox

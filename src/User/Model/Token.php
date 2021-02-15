@@ -96,7 +96,14 @@ class Token extends ActiveRecord
      */
     public function getUrl()
     {
-        return Url::to([$this->routes[$this->type], 'id' => $this->user_id, 'code' => $this->code], true);
+        if (!empty($this->module->tokenRoutes)) {
+            $type = $this->module->tokenRoutes[$this->type];
+        } else {
+            $type = $this->routes[$this->type];
+        }
+
+        // return Url::to([$this->routes[$this->type], 'id' => $this->user_id, 'code' => $this->code], true);
+        return Yii::$app->urlManagerFrontend->createAbsoluteUrl(implode(DIRECTORY_SEPARATOR, [$type, strval($this->user_id), $this->code]), true);
     }
 
     /**

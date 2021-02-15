@@ -57,6 +57,20 @@ class SecurityController extends Controller
     }
 
     /**
+     * @param \yii\base\Action $action
+     *
+     * @return bool
+     */
+    public function beforeAction($action)
+    {
+        if (array_key_exists($this->id, $this->module->layouts)) {
+            $this->layout = $this->module->layouts[$this->id];
+        }
+
+        return parent::beforeAction($action);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function behaviors()
@@ -150,7 +164,7 @@ class SecurityController extends Controller
             }
             else
             {
-                $this->trigger(FormEvent::EVENT_FAILED_LOGIN, $event);    
+                $this->trigger(FormEvent::EVENT_FAILED_LOGIN, $event);
             }
         }
 
