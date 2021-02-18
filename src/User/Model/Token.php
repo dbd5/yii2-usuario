@@ -11,6 +11,7 @@
 
 namespace Da\User\Model;
 
+use Yii;
 use Da\User\Helper\SecurityHelper;
 use Da\User\Query\TokenQuery;
 use Da\User\Traits\ContainerAwareTrait;
